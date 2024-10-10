@@ -10,10 +10,12 @@ public class SnakeController : MonoBehaviour
     private Vector3 direction = Vector3.forward;
     private List<Transform> tail = new List<Transform>();
     private bool ate = false;
+    private GameManager gameManager;
 
     void Start()
     {
         InvokeRepeating("Move", 0f, 0.1f);
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     void Update()
@@ -54,15 +56,15 @@ public class SnakeController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("SnakeApple"))  // Changed from "Apple" to "SnakeApple"
+        if (other.CompareTag("SnakeApple"))
         {
             ate = true;
             Destroy(other.gameObject);
+            gameManager.IncrementScore();
         }
         else if (other.CompareTag("Wall") || other.CompareTag("Tail"))
         {
-            // Game over logic here
-            Debug.Log("Game Over");
+            gameManager.GameOver();
         }
     }
 }

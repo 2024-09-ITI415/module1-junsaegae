@@ -1,16 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public AppleSpawner appleSpawner;
     public SnakeController snakeController;
-    private int score = 0;  // Changed to private
+    public GameOverScreen gameOverScreen;
+    private int score = 0;
 
     void Start()
     {
         // Initialize game
+        gameOverScreen.gameObject.SetActive(false);
     }
 
     public void IncrementScore()
@@ -25,10 +25,27 @@ public class GameManager : MonoBehaviour
     {
         // Handle game over logic
         Debug.Log("Game Over! Final Score: " + score);
-        // You might want to restart the game or show a game over screen
+        gameOverScreen.Setup(score);
+        Time.timeScale = 0; // Pause the game
     }
 
-    // Getter for score if needed
+    public void RestartGame()
+    {
+        score = 0;
+        Time.timeScale = 1; // Resume normal time scale
+        // Reset snake position
+        snakeController.transform.position = Vector3.zero;
+        // Clear tail
+        foreach (Transform child in snakeController.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        // Hide game over screen
+        gameOverScreen.gameObject.SetActive(false);
+        // Respawn apple
+        appleSpawner.SpawnSnakeApple();
+    }
+
     public int GetScore()
     {
         return score;
