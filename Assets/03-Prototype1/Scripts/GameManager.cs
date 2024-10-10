@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gameOverScreen.gameObject.SetActive(false); // Hide the game over screen at the start
+        scoreText.gameObject.SetActive(true);
         UpdateScoreUI();  // Ensure the score is displayed at the start
         appleSpawner.SpawnSnakeApple(); // Spawn the first apple
     }
