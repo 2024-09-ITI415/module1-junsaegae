@@ -32,47 +32,45 @@ public class SnakeController : MonoBehaviour
     }
 
     void Move()
-{
-    Vector3 v = transform.position;
-
-    // Create a new tail segment if the snake ate an apple
-    if (ate)
     {
-        GameObject g = Instantiate(tailPrefab, v, Quaternion.identity);  // Create new tail segment
-        tail.Insert(0, g.transform);  // Add it to the beginning of the tail list
-        ate = false;  // Reset the ate flag
-    }
-    // Move tail
-    else if (tail.Count > 0)
-    {
-        tail[tail.Count - 1].position = v;
-        tail.Insert(0, tail[tail.Count - 1]);
-        tail.RemoveAt(tail.Count - 1);
-    }
+        Vector3 v = transform.position;
 
-    // Move head
-    transform.Translate(direction * gridSize);
-}
+        // Create a new tail segment if the snake ate an apple
+        if (ate)
+        {
+            GameObject g = Instantiate(tailPrefab, v, Quaternion.identity); // Create new tail segment
+            tail.Insert(0, g.transform); // Add it to the beginning of the tail list
+            ate = false; // Reset the ate flag
+        }
+        // Move tail
+        else if (tail.Count > 0)
+        {
+            tail[tail.Count - 1].position = v;
+            tail.Insert(0, tail[tail.Count - 1]);
+            tail.RemoveAt(tail.Count - 1);
+        }
 
+        // Move head
+        transform.Translate(direction * gridSize);
+    }
 
     void OnTriggerEnter(Collider other)
-{
-    // If the snake collides with an apple
-    if (other.CompareTag("SnakeApple"))
     {
-        ate = true;  // Snake ate an apple, so it will grow
-        Destroy(other.gameObject);  // Destroy the eaten apple
+        // If the snake collides with an apple
+        if (other.CompareTag("SnakeApple"))
+        {
+            ate = true; // Snake ate an apple, so it will grow
+            Destroy(other.gameObject); // Destroy the eaten apple
 
-        // Spawn a new apple
-        FindObjectOfType<AppleSpawner>().SpawnSnakeApple();
+            // Spawn a new apple
+            FindObjectOfType<AppleSpawner>().SpawnSnakeApple();
 
-        // Increment score and update the display
-        gameManager.IncrementScore();
+            // Increment score and update the display
+            gameManager.IncrementScore();
+        }
+        else if (other.CompareTag("Wall") || other.CompareTag("Tail"))
+        {
+            gameManager.GameOver(); // Trigger game over
+        }
     }
-    else if (other.CompareTag("Wall") || other.CompareTag("Tail"))
-    {
-        gameManager.GameOver();  // Trigger game over
-    }
-}
-
 }
