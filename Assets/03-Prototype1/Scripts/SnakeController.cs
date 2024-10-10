@@ -54,7 +54,7 @@ public class SnakeController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Apple"))
+        if (other.CompareTag("SnakeApple"))  // Changed from "Apple" to "SnakeApple"
         {
             ate = true;
             Destroy(other.gameObject);
