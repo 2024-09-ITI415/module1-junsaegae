@@ -3,17 +3,19 @@ using System.Collections.Generic;
 
 public class SnakeController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public float gridSize = 1f;
-    public GameObject tailPrefab;
+    public float moveSpeed = 20f; // Speed of the snake
+    public float gridSize = 0.5f; // Size of the grid
+    public GameObject tailPrefab; // Prefab for the tail
 
-    private Vector3 direction = Vector3.forward;
-    private List<Transform> tail = new List<Transform>();
-    private bool ate = false;
-    private GameManager gameManager;
+    private Vector3 direction = Vector3.forward; // Current direction of movement
+    private List<Transform> tail = new List<Transform>(); // List to store tail segments
+    private bool ate = false; // Flag for eating an apple
+    private bool canEat = true; // Flag to prevent multiple increments
+    private GameManager gameManager; // Reference to the GameManager
 
     void Start()
     {
+        // Move the snake every 0.1 seconds
         InvokeRepeating("Move", 0f, 0.1f);
         gameManager = FindObjectOfType<GameManager>();
     }
@@ -38,9 +40,10 @@ public class SnakeController : MonoBehaviour
         // Create a new tail segment if the snake ate an apple
         if (ate)
         {
-            GameObject g = Instantiate(tailPrefab, v, Quaternion.identity); // Create new tail segment
-            tail.Insert(0, g.transform); // Add it to the beginning of the tail list
+            GameObject g = Instantiate(tailPrefab, v, Quaternion.identity);
+            tail.Insert(0, g.transform);
             ate = false; // Reset the ate flag
+            canEat = true; // Reset the canEat flag
         }
         // Move tail
         else if (tail.Count > 0)
@@ -57,7 +60,7 @@ public class SnakeController : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // If the snake collides with an apple
-        if (other.CompareTag("SnakeApple"))
+        if (other.CompareTag("SnakeApple") && canEat)
         {
             ate = true; // Snake ate an apple, so it will grow
             Destroy(other.gameObject); // Destroy the eaten apple
@@ -67,6 +70,7 @@ public class SnakeController : MonoBehaviour
 
             // Increment score and update the display
             gameManager.IncrementScore();
+            canEat = false; // Prevent multiple increments
         }
         else if (other.CompareTag("Wall") || other.CompareTag("Tail"))
         {

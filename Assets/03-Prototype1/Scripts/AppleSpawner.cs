@@ -8,6 +8,8 @@ public class AppleSpawner : MonoBehaviour
     public int gridLength = 20;
     public float yPosition = 0.5f; // Height of the playing field
 
+    private GameObject currentApple; // Store the currently active apple
+
     void Start()
     {
         SpawnSnakeApple(); // Spawn the initial apple
@@ -15,20 +17,23 @@ public class AppleSpawner : MonoBehaviour
 
     public void SpawnSnakeApple() // Method to spawn an apple
     {
+        // Clear existing apple
+        ClearApples();
+
+        // Generate new apple position
         int x = Random.Range(-gridWidth / 2, gridWidth / 2);
         int z = Random.Range(-gridLength / 2, gridLength / 2);
 
         Vector3 position = new Vector3(x * gridSize, yPosition, z * gridSize);
-        Instantiate(snakeApplePrefab, position, Quaternion.identity);
+        currentApple = Instantiate(snakeApplePrefab, position, Quaternion.identity); // Spawn new apple
     }
 
-    public void ClearApples() // Method to clear all apples
+    public void ClearApples() // Method to clear existing apple
     {
-        // Find all GameObjects tagged "SnakeApple" and destroy them
-        GameObject[] apples = GameObject.FindGameObjectsWithTag("SnakeApple");
-        foreach (GameObject apple in apples)
+        if (currentApple != null)
         {
-            Destroy(apple);
+            Destroy(currentApple); // Destroy the existing apple
+            currentApple = null; // Clear reference
         }
     }
 }
