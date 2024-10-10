@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 604249865128798237}
   - component: {fileID: 861953548569965029}
   m_Layer: 0
-  m_Name: SnakeTail
+  m_Name: TailSegment
   m_TagString: Tail
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

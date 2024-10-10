@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2455059802283472641}
   m_Layer: 0
   m_Name: SnakeApple
-  m_TagString: Untagged
+  m_TagString: SnakeApple
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
