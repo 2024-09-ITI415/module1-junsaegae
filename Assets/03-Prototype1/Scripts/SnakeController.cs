@@ -55,16 +55,16 @@ public class SnakeController : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other)
+{
+    if (other.CompareTag("SnakeApple"))
     {
-        if (other.CompareTag("SnakeApple"))
-        {
-            ate = true;
-            Destroy(other.gameObject);
-            gameManager.IncrementScore();
-        }
-        else if (other.CompareTag("Wall") || other.CompareTag("Tail"))
-        {
-            gameManager.GameOver();
-        }
+        ate = true;
+        Destroy(other.gameObject);
+        gameManager.IncrementScore();
     }
+    else if (other.CompareTag("Wall") || other.CompareTag("Tail"))
+    {
+        gameManager.GameOver();  // This should trigger game over
+    }
+}
 }

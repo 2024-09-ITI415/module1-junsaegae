@@ -4,7 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Apple
+  - Tail
+  - Wall
+  - SnakeApple
   layers:
   - Default
   - TransparentFX

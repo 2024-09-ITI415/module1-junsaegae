@@ -22,12 +22,11 @@ public class GameManager : MonoBehaviour
     }
 
     public void GameOver()
-    {
-        // Handle game over logic
-        Debug.Log("Game Over! Final Score: " + score);
-        gameOverScreen.Setup(score);
-        Time.timeScale = 0; // Pause the game
-    }
+{
+    Debug.Log("Game Over! Final Score: " + score);
+    gameOverScreen.Setup(score);
+    Time.timeScale = 0; // Pause the game
+}
 
     public void RestartGame()
     {
