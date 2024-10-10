@@ -1,18 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager1 : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public AppleSpawner appleSpawner;
+    public SnakeController snakeController;
+    public int score = 0;
+
     void Start()
     {
-        
+        // Initialize game
     }
 
-    // Update is called once per frame
-    void Update()
+    public void IncrementScore()
     {
-        
+        score++;
+        appleSpawner.SpawnApple();
+        // Update UI or perform other actions
+    }
+
+    public void GameOver()
+    {
+        // Handle game over logic
+        Debug.Log("Game Over! Final Score: " + score);
+        // You might want to restart the game or show a game over screen
     }
 }
