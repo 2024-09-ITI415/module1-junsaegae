@@ -1,9 +1,10 @@
 using UnityEngine;
-
+using TMPro;
 public class GameManager : MonoBehaviour
 {
     public AppleSpawner appleSpawner;
     public SnakeController snakeController;
+    public TextMeshProUGUI scoreText;
     public GameOverScreen gameOverScreen;
     private int score = 0;
 
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     {
         score++;
         appleSpawner.SpawnSnakeApple();
+        scoreText.text = ("Score: " + score);
         // Update UI or perform other actions
         Debug.Log("Score: " + score);
     }
