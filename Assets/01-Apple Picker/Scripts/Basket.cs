@@ -1,19 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro; // Add this namespace to use TextMeshPro
 
 public class Basket : MonoBehaviour
 {
     [Header("Set Dynamically")]
-    public Text scoreGT;
+    public TextMeshProUGUI scoreGT; // Use TextMeshProUGUI instead of Text
 
     private static int score = 0;
 
     void Start()
     {
+        // Find the GameObject with the name "ScoreCounter"
         GameObject scoreGO = GameObject.Find("ScoreCounter");
-        scoreGT = scoreGO.GetComponent<Text>();
+        if (scoreGO != null)
+        {
+            // Get the TextMeshProUGUI component from the GameObject
+            scoreGT = scoreGO.GetComponent<TextMeshProUGUI>();
+            if (scoreGT == null)
+            {
+                Debug.LogError("No TextMeshProUGUI component found on ScoreCounter!");
+            }
+        }
+        else
+        {
+            Debug.LogError("GameObject 'ScoreCounter' not found!");
+        }
+
         score = 0;
         UpdateScore();
     }
@@ -41,7 +55,14 @@ public class Basket : MonoBehaviour
 
     void UpdateScore()
     {
-        scoreGT.text = score.ToString();
+        if (scoreGT != null)
+        {
+            scoreGT.text = score.ToString(); // Update the TextMeshPro text
+        }
+        else
+        {
+            Debug.LogError("scoreGT is not set in UpdateScore!");
+        }
     }
 
     public static int GetScore()

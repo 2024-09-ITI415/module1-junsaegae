@@ -1,62 +1,48 @@
 using UnityEngine;
-using TMPro; // Import TextMeshPro namespace
 
 public class GameManager : MonoBehaviour
 {
-    public AppleSpawner appleSpawner;  // Reference to the AppleSpawner
-    public SnakeController snakeController;  // Reference to the SnakeController
-    public GameOverScreen gameOverScreen;  // Reference to the GameOverScreen
-    private int score = 0;  // Initial score
-    public TextMeshProUGUI scoreText;  // Use TextMeshProUGUI for score display
+    public AppleSpawner appleSpawner;
+    public SnakeController snakeController;
+    public GameOverScreen gameOverScreen;
+    private int score = 0;
 
     void Start()
     {
-        gameOverScreen.gameObject.SetActive(false); // Hide the game over screen at the start
-        scoreText.gameObject.SetActive(true);
-        UpdateScoreUI();  // Ensure the score is displayed at the start
-        appleSpawner.SpawnSnakeApple(); // Spawn the first apple
+        // Initialize game
+        gameOverScreen.gameObject.SetActive(false);
     }
 
     public void IncrementScore()
     {
-        score += 1;  // Increment score by 1
-        UpdateScoreUI();  // Update displayed score
-    }
-
-    private void UpdateScoreUI()
-    {
-        if (scoreText != null)
-        {
-            scoreText.text = "Score: " + score.ToString();  // Update the score display
-        }
+        score++;
+        appleSpawner.SpawnSnakeApple();
+        // Update UI or perform other actions
+        Debug.Log("Score: " + score);
     }
 
     public void GameOver()
     {
+        // Handle game over logic
         Debug.Log("Game Over! Final Score: " + score);
-        gameOverScreen.Setup(score); // Show the game over screen with the score
+        gameOverScreen.Setup(score);
         Time.timeScale = 0; // Pause the game
     }
 
     public void RestartGame()
     {
-        score = 0; // Reset score
+        score = 0;
         Time.timeScale = 1; // Resume normal time scale
-        snakeController.transform.position = Vector3.zero; // Reset snake position
-
-        // Clear the snake's tail
-        foreach (Transform child in snakeController.transform)
-        {
-            Destroy(child.gameObject);
-        }
-
-        gameOverScreen.gameObject.SetActive(false); // Hide game over screen
-        appleSpawner.SpawnSnakeApple(); // Respawn the apple
-        UpdateScoreUI(); // Update the score display after restart
+        // Reset snake
+        snakeController.ResetSnake();
+        // Hide game over screen
+        gameOverScreen.gameObject.SetActive(false);
+        // Respawn apple
+        appleSpawner.SpawnSnakeApple();
     }
 
     public int GetScore()
     {
-        return score;  // Return the current score
+        return score;
     }
 }

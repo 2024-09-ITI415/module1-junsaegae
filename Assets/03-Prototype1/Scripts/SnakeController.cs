@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public class SnakeController : MonoBehaviour
 {
-    public float moveSpeed = 20f; // Speed of the snake
-    public float gridSize = 0.5f; // Size of the grid
+    public float moveSpeed = 5f; // Speed of the snake
+    public float gridSize = 1f; // Size of the grid
     public GameObject tailPrefab; // Prefab for the tail
 
     private Vector3 direction = Vector3.forward; // Current direction of movement
@@ -76,5 +76,28 @@ public class SnakeController : MonoBehaviour
         {
             gameManager.GameOver(); // Trigger game over
         }
+    }
+
+    // Reset snake for restarting the game
+    public void ResetSnake()
+    {
+        // Reset snake's position
+        transform.position = Vector3.zero;
+
+        // Destroy all tail segments
+        foreach (Transform tailSegment in tail)
+        {
+            Destroy(tailSegment.gameObject);
+        }
+
+        // Clear the tail list
+        tail.Clear();
+
+        // Reset direction
+        direction = Vector3.forward;
+
+        // Reset flags
+        ate = false;
+        canEat = true;
     }
 }
