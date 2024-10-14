@@ -470,7 +470,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 588314229}
+  m_Father: {fileID: 1039419454}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -845,7 +845,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 27954941}
-  - {fileID: 194675376}
   - {fileID: 1227646532}
   m_Father: {fileID: 1039419454}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1280,6 +1279,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 588314229}
+  - {fileID: 194675376}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1652,8 +1652,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   appleSpawner: {fileID: 1471687643}
   snakeController: {fileID: 616432962}
-  gameOverScreen: {fileID: 588314230}
   scoreText: {fileID: 194675377}
+  gameOverScreen: {fileID: 588314230}
 --- !u!114 &1471687643
 MonoBehaviour:
   m_ObjectHideFlags: 0
