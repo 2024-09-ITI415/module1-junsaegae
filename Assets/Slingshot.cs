@@ -12,7 +12,7 @@ public class Slingshot : MonoBehaviour {
     void Awake () {
         Transform launchPointTrans = transform.Find("LaunchPoint");
         launchPoint = launchPointTrans.gameObject;
-        launchPoint.setActive(false);
+        launchPoint.SetActive(false);
     }
    
     void OnMouseEnter() {
