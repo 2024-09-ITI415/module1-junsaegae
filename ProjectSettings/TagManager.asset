@@ -9,6 +9,7 @@ TagManager:
   - SnakeApple
   - Apple
   - Basket
+  - Projectile
   layers:
   - Default
   - TransparentFX
