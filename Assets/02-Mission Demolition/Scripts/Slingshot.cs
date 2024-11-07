@@ -103,6 +103,8 @@ public class Slingshot : MonoBehaviour
             projectileRigidbody.velocity = -mouseDelta * velocityMult; // Set the projectile velocity
 
             projectile = null; // Clear the reference to the projectile
+            MissionDemolition.ShotFired();
+            ProjectileLine.S.poi = projectile;
         }
     }
 }
