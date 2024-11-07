@@ -1,36 +1,33 @@
-using UnityEngine;
+
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class ProjectileLine : MonoBehaviour 
+public class ProjectileLine : MonoBehaviour
 {
-    static public ProjectileLine S;  // Singleton
-
+    static public ProjectileLine S;
     [Header("Set in Inspector")]
-    public float minDist = 0.1f;
-    
+    public float minDist = .1f;
     private LineRenderer line;
     private GameObject _poi;
-    private List<Vector3> points;
-
-    void Awake() 
+    public List<Vector3> points;
+    void Awake()
     {
         S = this;
         line = GetComponent<LineRenderer>();
-        if (line == null)
-        {
-            line = gameObject.AddComponent<LineRenderer>();
-        }
         line.enabled = false;
         points = new List<Vector3>();
     }
-
-    public GameObject poi 
+    public GameObject poi
     {
-        get { return _poi; }
-        set 
+        get
+        {
+            return (_poi);
+        }
+        set
         {
             _poi = value;
-            if (_poi != null) 
+            if (_poi != null)
             {
                 line.enabled = false;
                 points = new List<Vector3>();
@@ -38,28 +35,22 @@ public class ProjectileLine : MonoBehaviour
             }
         }
     }
-
-    public void Clear() 
+    public void Clear()
     {
         _poi = null;
         line.enabled = false;
         points = new List<Vector3>();
     }
-
-    public void AddPoint() 
+    public void AddPoint()
     {
-        if (_poi == null) return;
-
         Vector3 pt = _poi.transform.position;
-
-        if (points.Count > 0 && (pt - lastPoint).magnitude < minDist) 
+        if (points.Count > 0 && (pt - lastPoint).magnitude < minDist)
         {
             return;
         }
-
-        if (points.Count == 0) 
+        if (points.Count == 0)
         {
-            Vector3 launchPosDiff = pt - Slingshot.LAUNCH_POS;
+            Vector3 launchPosDiff = pt - Slingshot.LaunchPos;
             points.Add(pt + launchPosDiff);
             points.Add(pt);
             line.positionCount = 2;
@@ -67,51 +58,53 @@ public class ProjectileLine : MonoBehaviour
             line.SetPosition(1, points[1]);
             line.enabled = true;
         }
-        else 
+        else
         {
+            // Normal behavior of adding a point
             points.Add(pt);
             line.positionCount = points.Count;
             line.SetPosition(points.Count - 1, lastPoint);
             line.enabled = true;
         }
     }
-
-    public Vector3 lastPoint 
+    public Vector3 lastPoint
     {
-        get 
+        get
         {
-            if (points == null || points.Count == 0)
-                return Vector3.zero;
-            return points[points.Count - 1];
+            if (points == null)
+            {
+                return (Vector3.zero);
+            }
+            return (points[points.Count - 1]);
         }
     }
-
-    void FixedUpdate() 
+    void FixedUpdate()
     {
-        if (poi == null) 
+        if (poi == null)
         {
-            if (FollowCam.POI != null) 
+            if (FollowCam.POI != null)
             {
-                if (FollowCam.POI.CompareTag("Projectile")) 
+                if (FollowCam.POI.tag == "Projectile")
                 {
                     poi = FollowCam.POI;
                 }
-                else 
+                else
                 {
                     return;
                 }
-            } 
-            else 
+            }
+            else
             {
                 return;
             }
+
         }
-
         AddPoint();
-
-        if (FollowCam.POI == null) 
+        if (FollowCam.POI == null)
         {
             poi = null;
         }
+
+
     }
 }
